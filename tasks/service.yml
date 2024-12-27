@@ -1,7 +1,7 @@
 ---
 - name: Place cod binary file
   ansible.builtin.copy:
-    src: "files/cod-{{ cod_version }}"
+    src: "cod-{{ cod_version }}"
     dest: "/usr/local/bin/cod-{{ cod_version }}"
     mode: "0755"
   become: true
