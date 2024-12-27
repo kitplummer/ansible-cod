@@ -2,7 +2,7 @@ galaxy_info:
   author: Kit Plummer
   description: An Ansible role for provision a node with COD
   company: Ditto
-
+  version: 0.0.1
   license: MIT
 
   min_ansible_version: 2.1
