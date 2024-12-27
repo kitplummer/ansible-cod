@@ -1,0 +1,50 @@
+node_name = "{{ inventory_hostname }}"
+
+# Template config file
+[[services]]
+name = "agent_mission"
+type = "websocket_server"
+model_ids = ["mission1"]
+host = "127.0.0.1"
+port = {{ mission_port }}
+path = "/api/mission_status/"
+
+# HTTP Service for the local agent to POST telemetry reports to
+[[services]]
+name = "agent_telem"
+type = "http_server"
+model_ids = ["telem1"]
+host = "127.0.0.1"
+port = {{ telem_port }}
+path = "/api/telemetry/"
+
+# HTTP Service for the local agent to POST contact reports to
+[[services]]
+name = "agent_contacts"
+type = "http_server"
+model_ids = ["contacts1"]
+host = "127.0.0.1"
+port = {{ contacts_port }}
+path = "/api/contact_reports/"
+
+[[models]]
+id = "mission1"
+type = "mission"
+
+[[models]]
+id = "contacts1"
+type = "contact_report"
+
+[[models]]
+id = "telem1"
+type = "telemetry"
+
+[backend]
+id = "ditto"
+type = "ditto"
+auth_method = "offline_license"
+use_lan = true
+tcp_servers = ["{{ ditto_tcp_server }}"]
+app_id = "{{ app_id }}"
+app_token = "{{ app_token }}"
+shared_key = "{{ shared_key }}"

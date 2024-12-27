@@ -1,0 +1,29 @@
+---
+- name: Place cod binary file
+  ansible.builtin.copy:
+    src: "files/cod-{{ cod_version }}"
+    dest: "/usr/local/bin/cod-{{ cod_version }}"
+    mode: "0755"
+  become: true
+  tags: config
+- name: Place cod-service file
+  ansible.builtin.template:
+    src: templates/cod_service.j2
+    dest: "/etc/systemd/system/cod.service"
+    mode: "0755"
+  become: true
+  tags: service
+- name: Place cod-service file
+  ansible.builtin.template:
+    src: templates/cod_service_start.sh.j2
+    dest: "/home/{{ ansible_user_id }}/ditto/cod_service_start.sh"
+    mode: "0755"
+  become: true
+  tags: service
+- name: Enable and start COD service
+  become: true
+  ansible.builtin.service:
+    name: cod.service
+    state: started
+    enabled: true
+  tags: service

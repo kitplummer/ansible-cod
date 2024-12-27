@@ -1,0 +1,66 @@
+default_node_id = "{{ cod_node_name }}"
+
+[logging]
+backend_log = "info"
+# Template config file
+[[services]]
+name = "agent_mission"
+type = "websocket_server"
+model_ids = ["mission", "telemetry", "contact"]
+host = "127.0.0.1"
+port = {{ cod_c2_port }}
+path = "/api/c2/"
+
+[[services]]
+name = "agent"
+type = "websocket_server"
+model_ids = ["interagent"]
+host = "127.0.0.1"
+port = {{ cod_agent_port }}
+path = "/api/vehicle/"
+
+[[models]]
+id = "mission"
+type = "mission"
+# Since there is a single sender (command), we can sort
+# incoming messages by sender seq (timestamp).
+sort_from_model = true
+
+[[models]]
+id = "contact"
+type = "contact_report"
+select_limit = {{ cod_mission_select_limit }}
+
+[[models]]
+id = "telemetry"
+type = "telemetry"
+select_limit = {{ cod_telemetry_select_limit }}
+
+[[models]]
+id = "interagent"
+type = "intervehicle"
+select_limit = {{ cod_interagent_select_limit }}
+# Should't be needed for live deployments. Depends on synchronized clocks for
+# best results. Uesd for scale testing.
+sort_from_model = true
+
+[[models]]
+id = "meta"
+type = "group_metadata"
+
+[backend]
+id = "ditto"
+type = "ditto"
+auth_method = "offline_license"
+use_mdns = {{ cod_use_mdns }}
+use_lan = true
+{% if ditto_tcp_server is defined %}
+tcp_servers = {{ cod_ditto_tcp_server }}
+{% endif %}
+{% if cod_tcp_listen_addr is defined %}
+tcp_listen_addr = "{{ cod_tcp_listen_addr }}"
+{% endif %}
+{% if cod_tcp_listen_port is defined %}
+tcp_listen_port = {{ cod_tcp_listen_port }}
+{% endif %}
+pdl_path = "{{ cod_pdl_path }}"

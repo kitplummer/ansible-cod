@@ -1,0 +1,13 @@
+---
+cod_node_name: cod
+cod_version: v0.2.3
+cod_container: FALSE
+cod_platform: x86_64
+cod_c2_port: 9990
+cod_agent_port: 9991
+cod_mission_select_limit: 1
+cod_telemetry_select_limit: 10
+cod_interagent_select_limit: 1
+cod_use_mdns: "true"
+cod_pdl_path: cod.pdl
+

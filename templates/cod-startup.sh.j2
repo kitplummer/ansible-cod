@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Set the environmental variables
+export RUST_LOG=debug
+
+# Stop and remove existing containers
+docker compose down
+
+# Start all services
+if docker compose up -d; then
+  echo "All containers started successfully."
+else
+  echo "Error: Failed to start one or more containers."
+  exit 1
+fi

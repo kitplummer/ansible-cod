@@ -1,0 +1,5 @@
+#!/bin/sh
+
+ip link set down {{ eth_interface }}
+ip link set {{ eth_interface }} mtu 1334
+ip link set up {{ eth_interface }}

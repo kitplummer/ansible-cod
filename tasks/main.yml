@@ -1,0 +1,29 @@
+---
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/ditto/{{ item }}"
+    state: directory
+    recurse: true
+    mode: "0755"
+  loop:
+    - "bin"
+    - "config"
+    - "image"
+    - "log"
+  tags: config
+- name: Place cod-config file
+  ansible.builtin.template:
+    src: templates/cod-agent_config.toml.j2
+    dest: "{{ ansible_user_dir }}/ditto/config/cod_agent_config.toml"
+    mode: "0600"
+  tags: config
+- name: Place PDL file
+  ansible.builtin.copy:
+    src: cod.pdl
+    dest: "{{ ansible_user_dir }}/ditto/config/cod.pdl"
+    mode: "0600"
+  tags: config
+- import_tasks: roles/cod/tasks/container.yml
+  when: cod_container | bool
+- import_tasks: roles/cod/tasks/service.yml
+  when: not cod_container | bool

@@ -1,0 +1,17 @@
+services:
+  ditto-cod:
+    image: ghcr.io/getditto/cod2:{{ cod_version }}
+    container_name: ditto-cod
+    environment:
+      - RUST_LOG=${RUST_LOG}
+      - COD_APP_ID=${COD_APP_ID}
+      - COD_APP_TOKEN=${COD_APP_TOKEN}
+      - COD_SHARED_KEY=${COD_SHARED_KEY}
+    volumes:
+      - /home/{{ ansible_user_id }}/ditto/config:/config
+
+    restart: on-failure:5
+    privileged: true
+    network_mode: host
+    ipc: host
+    command: /config/cod_agent_config.toml

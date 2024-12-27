@@ -1,0 +1,9 @@
+[Unit]
+Description=Ditto COD Service
+Requires=network.target
+After=syslog.target network.target
+[Service]
+User={{ ansible_user_id }}
+ExecStart="/home/{{ ansible_user_id }}/ditto/cod_service_start.sh"
+[Install]
+WantedBy=multi-user.target
