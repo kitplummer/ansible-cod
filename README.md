@@ -9,10 +9,16 @@ Requirements
 If using the default configuration, to deploy as a systemd service, you will need to place the cod binary (cod-some_version) into the `files`
 with a valid Peer Ditto License (PDL) file.
 
+The binary file should be in the form of `cod-v0.2.3` and match the version provided as the variable: `cod_version`.
+
+The PDL and binary file should be available in the root/next to the playbook or in an expected path.
+
 Role Variables
 --------------
 
 To deploy COD as a container, executable with `docker-compose` be sure to set `cod_container` to TRUE.  This will also disable the deployment of COD as a systemd-service.
+
+Defaults:
 ```yml
 ---
 cod_node_name: cod              # Override this in an inventory file
@@ -25,7 +31,7 @@ cod_mission_select_limit: 1
 cod_telemetry_select_limit: 10
 cod_interagent_select_limit: 1
 cod_use_mdns: "true"            # To disable set to `"false"`
-cod_pdl_path: cod.pdl           # The name of the PDL file that is in `files/`
+cod_pdl_path: cod.pdl           # The name of the PDL file
 ```
 
 Dependencies
@@ -35,8 +41,6 @@ Requires `requests` Python module to be installed locally, where Ansible is exec
 
 Example Playbook
 ----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
     - hosts: cod_nodes
       roles:

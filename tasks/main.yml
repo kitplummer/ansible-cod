@@ -19,13 +19,13 @@
   tags: config
 - name: Place PDL file
   ansible.builtin.copy:
-    src: cod.pdl
+    src: "{{ cod_pdl_path }}"
     dest: "{{ ansible_user_dir }}/ditto/config/cod.pdl"
     mode: "0600"
   tags: config
 - name: Import container tasks
-  import_tasks: container.yml
+  ansible.builtin.import_tasks: container.yml
   when: cod_container | bool
 - name: Import service tasks
-  import_tasks: service.yml
+  ansible.builtin.import_tasks: service.yml
   when: not cod_container | bool
