@@ -40,7 +40,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: cod_nodes
       roles:
-         - { role: cod }
+         - { role: kitplummer.ansible-cod }
 
 License
 -------
